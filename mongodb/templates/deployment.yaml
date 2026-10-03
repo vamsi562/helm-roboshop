@@ -1,26 +1,12 @@
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: catalogue
-  namespace: roboshop
-  labels:
-    purpose: roboshop
-    component: catalogue
-    tier: backend
-data:
-  MONGO: "true"
-  MONGO_URL: "mongodb://mongodb:27017/catalogue"
-
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: catalogue
+  name: mongodb
   labels:
     purpose: roboshop
-    component: catalogue
-    tier: backend
+    component: mongodb
+    tier: db
   namespace: roboshop
 spec:
   # Specify replicas to be created
@@ -28,42 +14,27 @@ spec:
   selector:
     matchLabels:
       purpose: roboshop
-      component: catalogue
-      tier: backend
+      component: mongodb
+      tier: db
   template:
     # pod definition
     metadata:
       labels:
         purpose: roboshop
-        component: catalogue
-        tier: backend
+        component: mongodb
+        tier: db
     spec:
       containers:
-        - name: catalogue
+        - name: mongodb
           image: "{{ .Values.deployment.imageRepo }}:{{ .Values.deployment.imageVersion }}"
           imagePullPolicy: Always
-          envFrom:
-            - configMapRef:
-                name: catalogue
-          resources:
-            requests:
-              memory: "128Mi"
-              cpu: "100m"
-            limits:
-              memory: "256Mi"
-              cpu: "200m"
-          ports:
-            - name: liveness-port
-              containerPort: 8080
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: liveness-port
-            failureThreshold: 1
-            periodSeconds: 15
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: liveness-port
-            failureThreshold: 1
-            periodSeconds: 15
+          readinessProbe: # check if application is ready to serve requests
+            tcpSocket:
+              port: 27017
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe: # check if application is alive or not.
+            tcpSocket:
+              port: 27017
+            initialDelaySeconds: 15
+            periodSeconds: 5

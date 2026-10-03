@@ -1,15 +1,16 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: catalogue
+  name: mongodb
   namespace: roboshop
 spec:
-  type: "{{ .Values.service.type }}"
+  type: "{{ .Values.service.type }}""
   selector:
     purpose: roboshop
-    component: catalogue
-    tier: backend
+    component: mongodb
+    tier: db
   ports:
     - protocol: TCP
-      port: 8080 #servicePort
-      targetPort: 8080 #containerPort
+      port: 27017 #servicePort
+      targetPort: 27017 #containerPort
