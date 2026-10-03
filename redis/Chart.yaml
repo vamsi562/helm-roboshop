@@ -1,5 +1,5 @@
 apiVersion: v2
 name: mongodb
 version: 1.0.0 # Chart version
-description: MongoDB Installation
-appVersion: v1 # application version
+description: Redis Installation
+appVersion: 7.0 # application version
