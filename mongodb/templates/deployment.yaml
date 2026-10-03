@@ -43,7 +43,7 @@ spec:
           image: "{{ .Values.deployment.imageRepo }}:{{ .Values.deployment.imageVersion }}"
           imagePullPolicy: Always
           envFrom:
-            - configMapRef
+            - configMapRef:
                 name: catalogue
           resources:
             requests:
