@@ -1,0 +1,5 @@
+deployment:
+  imageRepo: redis
+  imageVersion: 7.0
+service:
+  type: ClusterIP

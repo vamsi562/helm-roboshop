@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    purpose: roboshop
+    component: redis
+    tier: db
+  namespace: roboshop
+spec:
+  # Specify replicas to be created
+  replicas: 1
+  selector:
+    matchLabels:
+      purpose: roboshop
+      component: redis
+      tier: db
+  template:
+    # pod definition
+    metadata:
+      labels:
+        purpose: roboshop
+        component: redis
+        tier: db
+    spec:
+      containers:
+        - name: redis
+          image: "{{ .Values.deployment.imageRepo }}:{{ .Values.deployment.imageVersion }}"
+          readinessProbe: # check if application is ready to serve requests
+            tcpSocket:
+              port: 6379
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe: # check if application is alive or not.
+            tcpSocket:
+              port: 6379
+            initialDelaySeconds: 5
+            periodSeconds: 5
