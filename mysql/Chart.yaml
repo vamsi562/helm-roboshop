@@ -1,5 +1,5 @@
 apiVersion: v2
-name: rabbitmq
+name: mysql
 version: 1.0.0 # Chart version
-description: rabbitmq Installation
-appVersion: 3 # application version of rabbitmq
+description: MySQL Installation
+appVersion: 8.0 # application version of MySQL
