@@ -29,3 +29,8 @@
     helm rollback <chart_name> <revision>
     # roll back to required version
 ```
+
+# roboshop helm command
+```
+    for i in mongodb redis rabbitmq mysql catalogue cart user shipping payment frontend; do cd $i && helm install $i . && cd ..; done
+```
