@@ -1,0 +1,5 @@
+deployment:
+  imageRepo: rabbitmq
+  imageVersion: 3
+service:
+  type: ClusterIP
