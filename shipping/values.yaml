@@ -1,0 +1,5 @@
+deployment:
+  imageRepo: vamsi562/shipping
+  imageVersion: v1
+service:
+  type: ClusterIP

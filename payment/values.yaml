@@ -1,0 +1,5 @@
+deployment:
+  imageRepo: vamsi562/payment
+  imageVersion: v1
+service:
+  type: ClusterIP
